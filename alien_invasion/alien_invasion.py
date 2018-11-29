@@ -18,6 +18,10 @@ class Settings():  # 设置类
         self.bullet_color = 60, 60, 60
         self.bullet_allowed = 3
 
+        self.alien_speed_factor = 1
+        self.fleet_drop_speed = 10
+        self.fleet_direction = 1
+
 
 def run_game():
     # 初始化游戏并创建一个屏幕对象
@@ -33,7 +37,6 @@ def run_game():
     aliens = Group()
 
     gf.create_fleet(ai_settings, screen, ship, aliens)
-    alien = Alien(ai_settings, screen)
 
     # 开始游戏
     while True:
@@ -41,6 +44,7 @@ def run_game():
         ship.update()
         bullets.update()
         gf.update_bullets(bullets)
+        gf.update_aliens(ai_settings, aliens)
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)
 
 
