@@ -27,10 +27,28 @@ def check_keyup_events(event, ship):
         ship.moving_left = False
 
 
-def check_events(ai_settings, screen, ship, bullets):
+def check_play_button(ai_settings, screen, stats, aliens, bullets, ship, play_button, mouse_x, mouse_y):
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked and not stats.game_active:
+        pygame.mouse.set_visible(False)
+        if play_button.rect.collidepoint(mouse_x, mouse_y):
+            stats.reset_stats()
+            stats.game_active = True
+
+            aliens.empty()
+            bullets.empty()
+
+            create_fleet(ai_settings, screen, ship, aliens)
+            ship.center_ship()
+
+
+def check_events(ai_settings, stats, aliens, screen, ship, bullets, play_button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(ai_settings, screen, stats, aliens, bullets, ship, play_button, mouse_x, mouse_y)
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, ai_settings, screen, ship, bullets)
         elif event.type == pygame.KEYUP:
@@ -75,12 +93,16 @@ def create_fleet(ai_settings, screen, ship, aliens):
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
 
-def update_screen(ai_settings, screen, ship, aliens, bullets):
+def update_screen(ai_settings, stats, screen, ship, aliens, bullets, play_button):
     screen.fill(ai_settings.bg_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
     aliens.draw(screen)
+
+    if not stats.game_active:
+        play_button.draw_button()
+
     # 让最近绘制的屏幕可见
     pygame.display.flip()
 
@@ -125,6 +147,7 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         sleep(0.5)
     else:
         stats.game_active = False
+        pygame.mouse.set_visible(True)
 
 
 def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
