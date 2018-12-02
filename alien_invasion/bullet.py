@@ -1,6 +1,5 @@
 import pygame
 from pygame.sprite import Sprite
-from pygame.sprite import Group
 
 
 class Bullet(Sprite):
