@@ -21,6 +21,7 @@ urlpatterns = [
 
     # path('admin/', admin.site.urls),
     url(r'^admin/', admin.site.urls),
+    url(r'^users/', include('users.urls', namespace='users')),
     url(r'', include('learning_logs.urls', namespace='learning_logs')),
 ]
 # app_name = 'learning_logs'
