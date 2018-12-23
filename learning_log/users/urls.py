@@ -1,14 +1,20 @@
-from django.conf.urls import url
+"""Defines url patterns for users."""
+
 from django.urls import path
-from django.contrib.auth.views import LoginView  # 导入类
+from django.contrib.auth import views as auth_views
+
 from . import views
-# 修改模板路径
-LoginView.template_name = 'users/login.html'
-urlpatterns = [
-    # 登录界面
-    path('login/', LoginView.as_view(),
-         name='login'),
-    url(r'^logout/$', views.logout_view, name='logout'),
-    url(r'^register/$', views.register, name='register'),
-]
+
 app_name = 'users'
+urlpatterns = [
+    # Login page.
+    path('login/',
+         auth_views.LoginView.as_view(template_name='users/login.html'),
+         name='login'),
+
+    # Logout page.
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
+    # Registration page.
+    path('register/', views.register, name='register'),
+]
