@@ -9,7 +9,6 @@
 		<title>Learning Log</title>
 		{% bootstrap_css %}
 		{% bootstrap_javascript %}
-
 	</head>
 	
 	<body>
@@ -51,6 +50,9 @@
 			</div>
 			<div>
 				{% block content %}{% endblock content %}
+			</div>
+			<div class="page-footer">
+				{% block footer %}{% endblock footer %}
 			</div>
 		</div> <!-- /container -->
 		

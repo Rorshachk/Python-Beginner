@@ -15,3 +15,8 @@
 		summarizing what you've learned.
 	</h2>
 {% endblock content %}
+
+{% block footer %}
+	{% load static %}
+		<img src="{% static "learning_logs/background-image.png" %}" alt="My image">
+{% endblock footer %}
