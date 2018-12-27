@@ -25,7 +25,7 @@ SECRET_KEY = 'o(kvifm9jjo4!63h=4-3eoub=kr(xd@dt$aw^&_#d&w(psgztg'
 # SECURITY WARNING: don't run with debug turned on in production!
 ALLOWED_HOSTS = ['127.0.0.1']
 
-DEBUG = True
+DEBUG = False
 
 # Application definition
 INSTALLED_APPS = [
@@ -135,7 +135,7 @@ BOOTSTRAP3 = {
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 
