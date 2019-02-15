@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from mdeditor.fields import MDTextField
 
 # Create your models here.
 
@@ -17,6 +18,7 @@ class Entry(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     text = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
+    content = MDTextField()
 
     class Meta:
         verbose_name_plural = 'entries'
