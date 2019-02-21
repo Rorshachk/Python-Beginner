@@ -5,7 +5,7 @@ import urllib
 import urllib.error
 
 from urllib import request, error
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse, urlsplit, urlunsplit
 
 
 # Request
@@ -42,8 +42,30 @@ except urllib.error.URLError as e:
 # parse
 result = urlparse('https://www.baidu.com/index.html;user?id=5#comment')
 print(type(result), result)
-print(result.scheme)
+print(result.scheme, result[0])
 
 
 result = urlparse('http://www.baidu.com', scheme='https')
 print(result)
+
+result = urlparse('https://www.baidu.com/index.html;user?id=5#comment',
+                  allow_fragments=False)
+print(result)
+
+result = urlparse('https://www.baidu.com/index.html#comment',
+                  allow_fragments=False)
+print(result)
+
+
+# unparse
+data = ['http', 'www.baidu.com', 'index.html', 'user', 'a=6', 'comment']
+print(urlunparse(data))
+
+URL = urlunparse(data)
+
+# split and unsplit
+result = urlsplit(URL)
+print(result)
+
+data = ['http', 'www.baidu.com', 'index.html', 'a=6', 'comment']
+print(urlunsplit(data))
