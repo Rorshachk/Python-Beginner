@@ -5,7 +5,7 @@ import urllib
 import urllib.error
 
 from urllib import request, error
-from urllib.parse import urlparse, urlunparse, urlsplit, urlunsplit
+from urllib.parse import urlparse, urlunparse, urlsplit, urlunsplit, urljoin, urlencode
 
 
 # Request
@@ -69,3 +69,23 @@ print(result)
 
 data = ['http', 'www.baidu.com', 'index.html', 'a=6', 'comment']
 print(urlunsplit(data))
+
+# url join
+# urljoin(base_url, new_url)
+# Only scheme,netloc,path works
+print(urljoin('http://www.baidu.com', 'FAQ.html'))
+print(urljoin('http://www.baidu.com', 'http://cuiqingcai.com/FAQ.html'))
+print(urljoin('http://www.baidu.com/about.html', 'http://cuiqingcai.com/FAQ.html'))
+print(urljoin('http://www.baidu.com?wd=abc', 'http://cuiqingcai.com/index.php'))
+print(urljoin('www.baidu.com', '?category=2#comment'))
+print(urljoin('www.baidu.com#comment', '?category=2'))
+
+
+# urlencode
+params = {
+    'name': 'germey',
+    'age': 22
+}
+base_url = 'http://www.baidu.copm?'
+url = base_url + urlencode(params)
+print(url)
