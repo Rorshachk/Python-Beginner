@@ -7,6 +7,9 @@ from bs4 import BeautifulSoup
 from pyquery import PyQuery as pq
 
 
+saved_data = []
+
+
 def get_one_page(url):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
@@ -25,14 +28,16 @@ def parse_one_page(html):
     doc = pq(html)
 
     for movie in doc('dd').items():
+        print(movie.find('.score').find('.integer').text() +
+              movie.find('.score').find('.fraction').text())
         yield{
             'index': movie.find('.board-index').text(),
             'image': movie.find('.board-img').attr('data-src'),
             'title': movie.find('name').find('a').text(),
             'actor': movie.find('.star').text(),
             'time': movie.find('.releasetime').text(),
-            'score': movie.find('.score').find('i').text() +
-            movie.find('.score').find('i').text()
+            'score': movie.find('.score').find('.integer').text() +
+            movie.find('.score').find('.fraction').text()
         }
 
 
@@ -41,15 +46,24 @@ def write_to_file(item):
         f.write(json.dumps(item, ensure_ascii=False) + '\n')
 
 
+def save(item):
+    saved_data.append(item)
+
+
 def main():
     base_url = 'https://maoyan.com/board/4/?offset='
     for i in range(10):
         html = get_one_page(base_url + str(i * 10))
         parse_one_page(html)
         for item in parse_one_page(html):
-            print(item)
-            write_to_file(item)
+            # print(item)
+            # write_to_file(item)
+            save(item)
 
         time.sleep(1)
 
+
 main()
+print(saved_data)
+with open('data.json', 'w') as f_obj:
+    json.dump(saved_data, f_obj)
