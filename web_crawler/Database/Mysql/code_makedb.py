@@ -46,7 +46,7 @@ def write_to_file(item):
     print(item.values())
 
     try:
-        #    sql = 'INSERT INTO movies(idex image title actor time score) values(%s %s %s %s %s %s)'
+        #    sql = 'INSERT INTO movies(idex, image, title, actor, time, score) values(%s, %s, %s, %s, %s, %s)'
         if cursor.execute(sql, tuple(item.values())):
             print('successful')
             db.commit()
