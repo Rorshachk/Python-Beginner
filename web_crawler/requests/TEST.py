@@ -2,7 +2,7 @@ import requests as rq
 import re
 from requests import Request, Session
 
-r = rq.get('http://www.baidu.com')
+r = rq.get('https://www.toutiao.com/a6671142904460739075/')
 print(type(r))
 print(r.status_code)
 print(type(r.text))
