@@ -10,7 +10,7 @@ print(r.text)
 print(r.cookies)
 
 r = rq.get('http://httpbin.org/get')
-print(r.text)
+print(r.text.encode('utf8'))
 
 data = {
     'name': 'germey',
