@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from tutorial.items
-    import QuoteItem
+from tutorial.items import QuoteItem
 
 
 class QuotesSpider(scrapy.Spider):
