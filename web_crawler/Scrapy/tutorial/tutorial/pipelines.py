@@ -7,6 +7,8 @@
 
 from scrapy.exceptions import DropItem
 import pymongo
+from scrapy.pipelines.images import ImagesPipeline
+from scrapy import Request
 
 
 class TextPipeline(object):
@@ -47,3 +49,20 @@ class MongoPipeline(object):
 
     def close_spider(self, spider):
         self.client.close()
+
+
+class ImagePipeline(ImagesPipeline):
+
+    def file_path(self, request, response=None, info=None):
+        url = request.url
+        file_name = url.split('/')[-1]
+        return file_name
+
+    def item_completed(self, results, item, info):
+        image_paths = [x['path'] for ok, x in results if ok]
+        if not image_paths:
+            raise DropItem('Image Download Failed')
+        return item
+
+    def get_media_requests(self, item, info):
+        yield Request(item['url'])
