@@ -59,7 +59,8 @@ class MysqlPipeline():
         )
 
     def open_spider(self, spider):
-        self.db = pymysql.connect(self.host, self.user, self.password, self.database, charset='utf8',
+        self.db = pymysql.connect(self.host, self.user, self.password,
+                                  self.database, charset='utf8',
                                   port=self.port)
         self.cursor = self.db.cursor()
 
